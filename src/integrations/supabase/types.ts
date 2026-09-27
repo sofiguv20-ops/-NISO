@@ -495,6 +495,7 @@ export type Database = {
           updated_at: string
         }[]
       }
+      i_answered: { Args: { _couple: string; _date: string }; Returns: boolean }
       is_partner: { Args: { _other: string }; Returns: boolean }
       join_couple: { Args: { _code: string }; Returns: string }
       leave_couple: { Args: never; Returns: undefined }
