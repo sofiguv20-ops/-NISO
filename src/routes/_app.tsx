@@ -2,6 +2,7 @@ import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useAuth } from "@/lib/auth";
 import { BottomNav } from "@/components/BottomNav";
+import { useRealtimeSync } from "@/lib/realtime";
 
 export const Route = createFileRoute("/_app")({
   ssr: false,
@@ -11,6 +12,7 @@ export const Route = createFileRoute("/_app")({
 function AppLayout() {
   const { session, loading } = useAuth();
   const navigate = useNavigate();
+  useRealtimeSync(session?.user.id);
   useEffect(() => {
     if (!loading && !session) navigate({ to: "/auth", replace: true });
   }, [loading, session, navigate]);
