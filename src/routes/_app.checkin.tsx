@@ -41,11 +41,11 @@ function Page() {
   });
 
   async function save() {
-    if (!mood || !uid) return toast.error("Elige cómo te sientes");
+    if (!mood || !uid) { toast.error("Elige cómo te sientes"); return; }
     setBusy(true);
     const { error } = await supabase.from("checkins").insert({ user_id: uid, mood, note: note.trim().slice(0, 500) || null, shared });
     setBusy(false);
-    if (error) return toast.error("No se pudo guardar");
+    if (error) { toast.error("No se pudo guardar"); return; }
     setMood(null); setNote("");
     qc.invalidateQueries({ queryKey: ["checkins"] });
     toast.success(shared ? "Check-in compartido" : "Check-in guardado solo para ti");

@@ -43,14 +43,14 @@ function Page() {
   const value = text ?? mine?.answer ?? "";
 
   async function save() {
-    if (!value.trim() || !uid || !coupleId) return toast.error("Escribe tu respuesta");
+    if (!value.trim() || !uid || !coupleId) { toast.error("Escribe tu respuesta"); return; }
     setBusy(true);
     const { error } = await supabase.from("daily_answers").upsert(
       { user_id: uid, couple_id: coupleId, question_date: today, question, answer: value.trim().slice(0, 2000) },
       { onConflict: "user_id,couple_id,question_date" },
     );
     setBusy(false);
-    if (error) return toast.error("No se pudo guardar");
+    if (error) { toast.error("No se pudo guardar"); return; }
     setText(null);
     qc.invalidateQueries({ queryKey: ["daily-answers"] });
     toast.success("Respuesta guardada");
