@@ -14,13 +14,334 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      couple_events: {
+        Row: {
+          all_day: boolean
+          couple_id: string
+          created_at: string
+          created_by: string
+          end_time: string | null
+          event_type: string
+          id: string
+          location: string | null
+          notes: string | null
+          owner_id: string | null
+          recurrence: string
+          reminder_minutes: number | null
+          start_time: string | null
+          starts_on: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          all_day?: boolean
+          couple_id: string
+          created_at?: string
+          created_by: string
+          end_time?: string | null
+          event_type?: string
+          id?: string
+          location?: string | null
+          notes?: string | null
+          owner_id?: string | null
+          recurrence?: string
+          reminder_minutes?: number | null
+          start_time?: string | null
+          starts_on: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          all_day?: boolean
+          couple_id?: string
+          created_at?: string
+          created_by?: string
+          end_time?: string | null
+          event_type?: string
+          id?: string
+          location?: string | null
+          notes?: string | null
+          owner_id?: string | null
+          recurrence?: string
+          reminder_minutes?: number | null
+          start_time?: string | null
+          starts_on?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "couple_events_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      couple_members: {
+        Row: {
+          couple_id: string
+          joined_at: string
+          user_id: string
+        }
+        Insert: {
+          couple_id: string
+          joined_at?: string
+          user_id: string
+        }
+        Update: {
+          couple_id?: string
+          joined_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "couple_members_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      couples: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          invite_code: string
+          started_on: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          invite_code: string
+          started_on?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          invite_code?: string
+          started_on?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      cycle_days: {
+        Row: {
+          created_at: string
+          day: string
+          energy: number | null
+          flow: string | null
+          mood: string | null
+          notes: string | null
+          pain: number | null
+          sleep_hours: number | null
+          symptoms: string[]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          day: string
+          energy?: number | null
+          flow?: string | null
+          mood?: string | null
+          notes?: string | null
+          pain?: number | null
+          sleep_hours?: number | null
+          symptoms?: string[]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          day?: string
+          energy?: number | null
+          flow?: string | null
+          mood?: string | null
+          notes?: string | null
+          pain?: number | null
+          sleep_hours?: number | null
+          symptoms?: string[]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_path: string | null
+          birthdate: string | null
+          created_at: string
+          display_name: string
+          id: string
+          pronouns: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_path?: string | null
+          birthdate?: string | null
+          created_at?: string
+          display_name?: string
+          id: string
+          pronouns?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_path?: string | null
+          birthdate?: string | null
+          created_at?: string
+          display_name?: string
+          id?: string
+          pronouns?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_locations: {
+        Row: {
+          accuracy: number | null
+          latitude: number
+          longitude: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          accuracy?: number | null
+          latitude: number
+          longitude: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          accuracy?: number | null
+          latitude?: number
+          longitude?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_settings: {
+        Row: {
+          created_at: string
+          hidden_home_cards: string[]
+          share_activity: boolean
+          share_custom_status: boolean
+          share_cycle_dates: boolean
+          share_cycle_phase: boolean
+          share_cycle_symptoms: boolean
+          share_location: boolean
+          share_mood: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          hidden_home_cards?: string[]
+          share_activity?: boolean
+          share_custom_status?: boolean
+          share_cycle_dates?: boolean
+          share_cycle_phase?: boolean
+          share_cycle_symptoms?: boolean
+          share_location?: boolean
+          share_mood?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          hidden_home_cards?: string[]
+          share_activity?: boolean
+          share_custom_status?: boolean
+          share_cycle_dates?: boolean
+          share_cycle_phase?: boolean
+          share_cycle_symptoms?: boolean
+          share_location?: boolean
+          share_mood?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_status: {
+        Row: {
+          activity: string | null
+          created_at: string
+          custom_status: string | null
+          mood: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          activity?: string | null
+          created_at?: string
+          custom_status?: string | null
+          mood?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          activity?: string | null
+          created_at?: string
+          custom_status?: string | null
+          mood?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      create_couple: { Args: never; Returns: string }
+      get_partner_cycle: {
+        Args: never
+        Returns: {
+          last_period_end: string
+          last_period_start: string
+          recent_mood: string
+          recent_symptoms: string[]
+          shares_dates: boolean
+          shares_symptoms: boolean
+          updated_at: string
+        }[]
+      }
+      get_partner_location: {
+        Args: never
+        Returns: {
+          accuracy: number
+          latitude: number
+          longitude: number
+          updated_at: string
+        }[]
+      }
+      get_partner_status: {
+        Args: never
+        Returns: {
+          activity: string
+          custom_status: string
+          mood: string
+          shares_cycle: boolean
+          shares_location: boolean
+          updated_at: string
+        }[]
+      }
+      is_partner: { Args: { _other: string }; Returns: boolean }
+      join_couple: { Args: { _code: string }; Returns: string }
+      leave_couple: { Args: never; Returns: undefined }
+      my_couple_id: { Args: never; Returns: string }
+      partner_id: { Args: never; Returns: string }
+      preview_invite: { Args: { _code: string }; Returns: string }
+      set_couple_start: { Args: { _date: string }; Returns: undefined }
     }
     Enums: {
       [_ in never]: never
