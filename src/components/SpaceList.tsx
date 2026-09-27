@@ -60,7 +60,7 @@ export function SpaceList({ kind }: { kind: Kind }) {
       {filters.length > 1 && (
         <div className="mt-4 flex gap-2 overflow-x-auto">
           {filters.map((f) => (
-            <button key={f.v} onClick={() => setFilter(f.v)}
+            <button key={f.v} onClick={() => setFilter(f.v as typeof filter)}
               className={`press shrink-0 rounded-full px-3.5 py-2 text-[13px] ${filter === f.v ? "bg-primary text-primary-foreground" : "bg-muted"}`}>{f.l}</button>
           ))}
         </div>
@@ -196,11 +196,11 @@ function ItemSheet({ kind, item, coupleId, uid, onClose, onSaved }: {
   async function save(e: React.FormEvent) {
     e.preventDefault();
     const needsTitle = !has("category") || category === "custom" || kind === "wish" || kind === "idea" || kind === "reminder";
-    if (needsTitle && !title.trim() && kind !== "photo") return toast.error("Escribe un título");
-    if (has("body") && ["message", "for_when"].includes(kind) && !body.trim()) return toast.error("Escribe el mensaje");
-    if (kind === "date" && !date) return toast.error("Elige la fecha");
-    if (kind === "reminder" && !date) return toast.error("Elige el día");
-    if (cfg.photoRequired && !file && !item?.photo_path) return toast.error("Elige una foto");
+    if (needsTitle && !title.trim() && kind !== "photo") { toast.error("Escribe un título"); return; }
+    if (has("body") && ["message", "for_when"].includes(kind) && !body.trim()) { toast.error("Escribe el mensaje"); return; }
+    if (kind === "date" && !date) { toast.error("Elige la fecha"); return; }
+    if (kind === "reminder" && !date) { toast.error("Elige el día"); return; }
+    if (cfg.photoRequired && !file && !item?.photo_path) { toast.error("Elige una foto"); return; }
     setSaving(true);
     try {
       let photo_path = item?.photo_path ?? null;
@@ -234,7 +234,7 @@ function ItemSheet({ kind, item, coupleId, uid, onClose, onSaved }: {
   async function remove() {
     if (!item || !confirm("¿Eliminar definitivamente?")) return;
     const { error } = await supabase.from("space_items").delete().eq("id", item.id);
-    if (error) return toast.error("No se pudo eliminar");
+    if (error) { toast.error("No se pudo eliminar"); return; }
     await removeMedia(item.photo_path);
     toast.success("Eliminado");
     onSaved();

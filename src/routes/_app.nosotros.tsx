@@ -146,15 +146,15 @@ function EditSheet({ space, onClose }: { space: OurSpace | null; onClose: () => 
   const [busy, setBusy] = useState(false);
 
   async function save() {
-    if ((met && met > today) || (start && start > today)) return toast.error("Las fechas no pueden ser futuras");
-    if (url && !/^https?:\/\//i.test(url)) return toast.error("El enlace debe empezar por https://");
+    if ((met && met > today) || (start && start > today)) { toast.error("Las fechas no pueden ser futuras"); return; }
+    if (url && !/^https?:\/\//i.test(url)) { toast.error("El enlace debe empezar por https://"); return; }
     setBusy(true);
     const { error } = await supabase.rpc("update_our_space", {
       _met_on: (met || null) as string, _started_on: (start || null) as string,
       _song_title: song, _song_artist: artist, _song_url: url,
     });
     setBusy(false);
-    if (error) return toast.error("No se pudo guardar");
+    if (error) { toast.error("No se pudo guardar"); return; }
     qc.invalidateQueries({ queryKey: ["our-space"] });
     qc.invalidateQueries({ queryKey: ["couple"] });
     toast.success("Guardado");

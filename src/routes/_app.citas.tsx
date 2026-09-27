@@ -50,11 +50,11 @@ function Page() {
 
   async function save() {
     if (!idea || !uid || !couple?.coupleId) return;
-    if (saved?.some((s) => s.title === idea.text)) return toast("Ya está en vuestras citas guardadas");
+    if (saved?.some((s) => s.title === idea.text)) { toast("Ya está en vuestras citas guardadas"); return; }
     const { error } = await supabase.from("space_items").insert({
       kind: "idea", title: idea.text, category: idea.cat, couple_id: couple.coupleId, created_by: uid, favorite: true,
     });
-    if (error) return toast.error("No se pudo guardar");
+    if (error) { toast.error("No se pudo guardar"); return; }
     qc.invalidateQueries({ queryKey: ["space-items"] });
     toast.success("Guardada en citas favoritas");
   }
