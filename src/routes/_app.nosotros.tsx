@@ -31,16 +31,16 @@ export function useOurSpace() {
   });
 }
 
-const SECTIONS: { to: string; kind?: Kind; label: string; icon: typeof Heart }[] = [
-  { to: "/espacio/photo", label: "Fotos", icon: Camera },
-  { to: "/espacio/memory", label: "Recuerdos", icon: Images },
-  { to: "/espacio/place", label: "Lugares especiales", icon: MapPin },
-  { to: "/espacio/date", label: "Fechas importantes", icon: CalendarHeart },
-  { to: "/espacio/message", label: "Mensajes especiales", icon: Heart },
-  { to: "/espacio/for_when", label: "Para cuando…", icon: Mail },
-  { to: "/espacio/wish", label: "Wishlist", icon: Gift },
-  { to: "/espacio/task", label: "Planes y tareas", icon: ListChecks },
-  { to: "/espacio/reminder", label: "Recordatorios", icon: Bell },
+const SECTIONS: { kind: Kind; label: string; icon: typeof Heart }[] = [
+  { kind: "photo", label: "Fotos", icon: Camera },
+  { kind: "memory", label: "Recuerdos", icon: Images },
+  { kind: "place", label: "Lugares especiales", icon: MapPin },
+  { kind: "date", label: "Fechas importantes", icon: CalendarHeart },
+  { kind: "message", label: "Mensajes especiales", icon: Heart },
+  { kind: "for_when", label: "Para cuando…", icon: Mail },
+  { kind: "wish", label: "Wishlist", icon: Gift },
+  { kind: "task", label: "Planes y tareas", icon: ListChecks },
+  { kind: "reminder", label: "Recordatorios", icon: Bell },
 ];
 
 function Page() {
@@ -105,14 +105,14 @@ function Page() {
       </div>
 
       <div className="card-soft mt-4 divide-y overflow-hidden">
-        {SECTIONS.map(({ to, label, icon: Icon }) => (
-          <Link key={to} to={to} className="press flex items-center gap-3 p-4">
+        {SECTIONS.map(({ kind, label, icon: Icon }) => (
+          <Link key={kind} to="/espacio/$kind" params={{ kind }} className="press flex items-center gap-3 p-4">
             <Icon className="size-5 text-primary" strokeWidth={1.5} />
             <span className="flex-1 text-[15px]">{label}</span>
             <ChevronRight className="size-4 text-faint" />
           </Link>
         ))}
-        <Link to="/espacio/idea" className="press flex items-center gap-3 p-4">
+        <Link to="/espacio/$kind" params={{ kind: "idea" }} className="press flex items-center gap-3 p-4">
           <Sparkles className="size-5 text-primary" strokeWidth={1.5} />
           <span className="flex-1 text-[15px]">Citas guardadas</span>
           <ChevronRight className="size-4 text-faint" />
@@ -124,7 +124,7 @@ function Page() {
   );
 }
 
-function QuickLink({ to, label, icon: Icon }: { to: string; label: string; icon: typeof Heart }) {
+function QuickLink({ to, label, icon: Icon }: { to: "/checkin" | "/pregunta" | "/citas"; label: string; icon: typeof Heart }) {
   return (
     <Link to={to} className="card-soft press flex flex-col items-center gap-2 p-4 text-center">
       <Icon className="size-6 text-primary" strokeWidth={1.5} />
