@@ -4,3 +4,8 @@
 - [x] Profiles: name, avatar, birthdate, pronouns
 - [x] Couples: create (invite code), join (confirm), max 2, unlink in Ajustes
 - [x] RLS: own data + own couple only
+- [x] Base de datos restaurada en este proyecto + sincronización en tiempo real
+- [ ] Probar evento + día de ciclo de principio a fin
+- [ ] Probar flujo con segunda cuenta (código) y sincronización
+- [ ] PWA: manifest, iconos NISO, favicon
+- [ ] Nuevas funciones de pareja (petición anterior)
