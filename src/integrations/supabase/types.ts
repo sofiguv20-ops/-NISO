@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      checkins: {
+        Row: {
+          created_at: string
+          id: string
+          mood: string
+          note: string | null
+          shared: boolean
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          mood: string
+          note?: string | null
+          shared?: boolean
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          mood?: string
+          note?: string | null
+          shared?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
       couple_events: {
         Row: {
           all_day: boolean
@@ -111,6 +138,10 @@ export type Database = {
           created_by: string | null
           id: string
           invite_code: string
+          met_on: string | null
+          song_artist: string | null
+          song_title: string | null
+          song_url: string | null
           started_on: string | null
           updated_at: string
         }
@@ -119,6 +150,10 @@ export type Database = {
           created_by?: string | null
           id?: string
           invite_code: string
+          met_on?: string | null
+          song_artist?: string | null
+          song_title?: string | null
+          song_url?: string | null
           started_on?: string | null
           updated_at?: string
         }
@@ -127,6 +162,10 @@ export type Database = {
           created_by?: string | null
           id?: string
           invite_code?: string
+          met_on?: string | null
+          song_artist?: string | null
+          song_title?: string | null
+          song_url?: string | null
           started_on?: string | null
           updated_at?: string
         }
@@ -174,6 +213,47 @@ export type Database = {
         }
         Relationships: []
       }
+      daily_answers: {
+        Row: {
+          answer: string
+          couple_id: string
+          created_at: string
+          id: string
+          question: string
+          question_date: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          answer: string
+          couple_id: string
+          created_at?: string
+          id?: string
+          question: string
+          question_date: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          answer?: string
+          couple_id?: string
+          created_at?: string
+          id?: string
+          question?: string
+          question_date?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "daily_answers_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_path: string | null
@@ -204,6 +284,74 @@ export type Database = {
         }
         Relationships: []
       }
+      space_items: {
+        Row: {
+          body: string | null
+          category: string | null
+          couple_id: string
+          created_at: string
+          created_by: string
+          done: boolean
+          favorite: boolean
+          id: string
+          item_date: string | null
+          item_time: string | null
+          kind: string
+          opened_at: string | null
+          photo_path: string | null
+          place: string | null
+          title: string
+          updated_at: string
+          visibility: string
+        }
+        Insert: {
+          body?: string | null
+          category?: string | null
+          couple_id: string
+          created_at?: string
+          created_by: string
+          done?: boolean
+          favorite?: boolean
+          id?: string
+          item_date?: string | null
+          item_time?: string | null
+          kind: string
+          opened_at?: string | null
+          photo_path?: string | null
+          place?: string | null
+          title?: string
+          updated_at?: string
+          visibility?: string
+        }
+        Update: {
+          body?: string | null
+          category?: string | null
+          couple_id?: string
+          created_at?: string
+          created_by?: string
+          done?: boolean
+          favorite?: boolean
+          id?: string
+          item_date?: string | null
+          item_time?: string | null
+          kind?: string
+          opened_at?: string | null
+          photo_path?: string | null
+          place?: string | null
+          title?: string
+          updated_at?: string
+          visibility?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "space_items_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_locations: {
         Row: {
           accuracy: number | null
@@ -232,39 +380,51 @@ export type Database = {
         Row: {
           created_at: string
           hidden_home_cards: string[]
+          notifications_enabled: boolean
+          notify_kinds: string[]
           share_activity: boolean
+          share_checkins: boolean
           share_custom_status: boolean
           share_cycle_dates: boolean
           share_cycle_phase: boolean
           share_cycle_symptoms: boolean
           share_location: boolean
           share_mood: boolean
+          theme: string
           updated_at: string
           user_id: string
         }
         Insert: {
           created_at?: string
           hidden_home_cards?: string[]
+          notifications_enabled?: boolean
+          notify_kinds?: string[]
           share_activity?: boolean
+          share_checkins?: boolean
           share_custom_status?: boolean
           share_cycle_dates?: boolean
           share_cycle_phase?: boolean
           share_cycle_symptoms?: boolean
           share_location?: boolean
           share_mood?: boolean
+          theme?: string
           updated_at?: string
           user_id: string
         }
         Update: {
           created_at?: string
           hidden_home_cards?: string[]
+          notifications_enabled?: boolean
+          notify_kinds?: string[]
           share_activity?: boolean
+          share_checkins?: boolean
           share_custom_status?: boolean
           share_cycle_dates?: boolean
           share_cycle_phase?: boolean
           share_cycle_symptoms?: boolean
           share_location?: boolean
           share_mood?: boolean
+          theme?: string
           updated_at?: string
           user_id?: string
         }
@@ -335,6 +495,7 @@ export type Database = {
           updated_at: string
         }[]
       }
+      i_answered: { Args: { _couple: string; _date: string }; Returns: boolean }
       is_partner: { Args: { _other: string }; Returns: boolean }
       join_couple: { Args: { _code: string }; Returns: string }
       leave_couple: { Args: never; Returns: undefined }
@@ -342,6 +503,16 @@ export type Database = {
       partner_id: { Args: never; Returns: string }
       preview_invite: { Args: { _code: string }; Returns: string }
       set_couple_start: { Args: { _date: string }; Returns: undefined }
+      update_our_space: {
+        Args: {
+          _met_on: string
+          _song_artist: string
+          _song_title: string
+          _song_url: string
+          _started_on: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
