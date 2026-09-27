@@ -10,33 +10,154 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRouteImport } from './routes/_app'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AppAjustesRouteImport } from './routes/_app.ajustes'
+import { Route as AppCalendarioRouteImport } from './routes/_app.calendario'
+import { Route as AppCicloRouteImport } from './routes/_app.ciclo'
+import { Route as AppInicioRouteImport } from './routes/_app.inicio'
+import { Route as AppNosotrosRouteImport } from './routes/_app.nosotros'
+import { Route as AppParejaRouteImport } from './routes/_app.pareja'
+import { Route as AppPerfilRouteImport } from './routes/_app.perfil'
+import { Route as AppUbicacionRouteImport } from './routes/_app.ubicacion'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppAjustesRoute = AppAjustesRouteImport.update({
+  id: '/ajustes',
+  path: '/ajustes',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCalendarioRoute = AppCalendarioRouteImport.update({
+  id: '/calendario',
+  path: '/calendario',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCicloRoute = AppCicloRouteImport.update({
+  id: '/ciclo',
+  path: '/ciclo',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppInicioRoute = AppInicioRouteImport.update({
+  id: '/inicio',
+  path: '/inicio',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppNosotrosRoute = AppNosotrosRouteImport.update({
+  id: '/nosotros',
+  path: '/nosotros',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppParejaRoute = AppParejaRouteImport.update({
+  id: '/pareja',
+  path: '/pareja',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPerfilRoute = AppPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppUbicacionRoute = AppUbicacionRouteImport.update({
+  id: '/ubicacion',
+  path: '/ubicacion',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/ajustes': typeof AppAjustesRoute
+  '/calendario': typeof AppCalendarioRoute
+  '/ciclo': typeof AppCicloRoute
+  '/inicio': typeof AppInicioRoute
+  '/nosotros': typeof AppNosotrosRoute
+  '/pareja': typeof AppParejaRoute
+  '/perfil': typeof AppPerfilRoute
+  '/ubicacion': typeof AppUbicacionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/ajustes': typeof AppAjustesRoute
+  '/calendario': typeof AppCalendarioRoute
+  '/ciclo': typeof AppCicloRoute
+  '/inicio': typeof AppInicioRoute
+  '/nosotros': typeof AppNosotrosRoute
+  '/pareja': typeof AppParejaRoute
+  '/perfil': typeof AppPerfilRoute
+  '/ubicacion': typeof AppUbicacionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_app/ajustes': typeof AppAjustesRoute
+  '/_app/calendario': typeof AppCalendarioRoute
+  '/_app/ciclo': typeof AppCicloRoute
+  '/_app/inicio': typeof AppInicioRoute
+  '/_app/nosotros': typeof AppNosotrosRoute
+  '/_app/pareja': typeof AppParejaRoute
+  '/_app/perfil': typeof AppPerfilRoute
+  '/_app/ubicacion': typeof AppUbicacionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/ajustes'
+    | '/calendario'
+    | '/ciclo'
+    | '/inicio'
+    | '/nosotros'
+    | '/pareja'
+    | '/perfil'
+    | '/ubicacion'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/ajustes'
+    | '/calendario'
+    | '/ciclo'
+    | '/inicio'
+    | '/nosotros'
+    | '/pareja'
+    | '/perfil'
+    | '/ubicacion'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/auth'
+    | '/_app/ajustes'
+    | '/_app/calendario'
+    | '/_app/ciclo'
+    | '/_app/inicio'
+    | '/_app/nosotros'
+    | '/_app/pareja'
+    | '/_app/perfil'
+    | '/_app/ubicacion'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +169,107 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app/ajustes': {
+      id: '/_app/ajustes'
+      path: '/ajustes'
+      fullPath: '/ajustes'
+      preLoaderRoute: typeof AppAjustesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/calendario': {
+      id: '/_app/calendario'
+      path: '/calendario'
+      fullPath: '/calendario'
+      preLoaderRoute: typeof AppCalendarioRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/ciclo': {
+      id: '/_app/ciclo'
+      path: '/ciclo'
+      fullPath: '/ciclo'
+      preLoaderRoute: typeof AppCicloRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/inicio': {
+      id: '/_app/inicio'
+      path: '/inicio'
+      fullPath: '/inicio'
+      preLoaderRoute: typeof AppInicioRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/nosotros': {
+      id: '/_app/nosotros'
+      path: '/nosotros'
+      fullPath: '/nosotros'
+      preLoaderRoute: typeof AppNosotrosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/pareja': {
+      id: '/_app/pareja'
+      path: '/pareja'
+      fullPath: '/pareja'
+      preLoaderRoute: typeof AppParejaRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/perfil': {
+      id: '/_app/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof AppPerfilRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/ubicacion': {
+      id: '/_app/ubicacion'
+      path: '/ubicacion'
+      fullPath: '/ubicacion'
+      preLoaderRoute: typeof AppUbicacionRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAjustesRoute: typeof AppAjustesRoute
+  AppCalendarioRoute: typeof AppCalendarioRoute
+  AppCicloRoute: typeof AppCicloRoute
+  AppInicioRoute: typeof AppInicioRoute
+  AppNosotrosRoute: typeof AppNosotrosRoute
+  AppParejaRoute: typeof AppParejaRoute
+  AppPerfilRoute: typeof AppPerfilRoute
+  AppUbicacionRoute: typeof AppUbicacionRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAjustesRoute: AppAjustesRoute,
+  AppCalendarioRoute: AppCalendarioRoute,
+  AppCicloRoute: AppCicloRoute,
+  AppInicioRoute: AppInicioRoute,
+  AppNosotrosRoute: AppNosotrosRoute,
+  AppParejaRoute: AppParejaRoute,
+  AppPerfilRoute: AppPerfilRoute,
+  AppUbicacionRoute: AppUbicacionRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
