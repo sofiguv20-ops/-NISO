@@ -1,0 +1,2 @@
+revoke execute on function public.handle_new_user(), public.my_couple_id(), public.is_partner(uuid), public.partner_id() from anon, public;
+revoke execute on function public.handle_new_user() from authenticated;
